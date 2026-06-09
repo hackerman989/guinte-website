@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guinte — Works</title>
+  <meta name="description" content="Selected works by Guinte." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="starfield"></div>
+
+  <div class="gallery-wrap">
+    <header class="masthead">
+      <h1 class="wordmark">Guinte Prints</h1>
+     <nav style="display:flex; gap:1.6rem;">
+  <a class="back" href="index.html">Home</a>
+  <a class="back" href="about.html">About</a>
+</nav>
+    </header>
+
+    <section class="grid" id="grid"></section>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lb-close" aria-hidden="true">&times;</span>
+    <img id="lb-img" src="" alt="" />
+    <div class="lb-cap" id="lb-cap"></div>
+  </div>
+
+  <script>
+  /* ============================================================
+     YOUR ARTWORKS LIVE HERE — this is the ONLY part you edit.
+
+     To add a piece:
+       1. Drop the image file into the  images/  folder.
+       2. Add a line below following the same pattern.
+
+     Order top-to-bottom = order it appears in the grid.
+     "medium" and "year" are optional — leave them as "" if unused.
+     ============================================================ */
+  const artworks = [
+    
+    { src: "images/linearnebula.jpg",   
+     title: "linearNebula",                   
+     medium: "ink on paper",
+    
+},
+    { src: "images/linearbits.jpg",
+     title: "linear bits",                   
+     medium: "ink on paper",
+},
+{
+      src:    "images/constellationline.jpg",
+      title:  "line works",
+      medium: "white pen, black paper",
+},
+        
+    { 
+      src: "images/tree.jpg",
+     title: "Oak tree",                   
+     medium: "ink on cardboard paper",
+},
+ 
+
+    { src: "images/zebra.jpg",   
+     title: "Zebra woodcut",                   
+     medium: "ink press on paper",
+    
+},
+    
+
+      
+    {
+      src:    "images/hexagonsnowflake.jpg",
+      title:  "hexagon snowflake",
+      medium: "pencil on paper",
+      
+    },
+  { src: "images/chair.jpg",   
+     title: "chair",                   
+     medium: "penon paper",
+    
+},
+    { src: "images/jellyfish.jpg",   
+     title: "deep sea jelly fish",                   
+     medium: "ink on paper",
+    
+},
+
+
+{
+      src:    "images/acrylicsdiamond.jpg",
+      title:  "triangles",
+      medium: "acrylic on canvas",
+      
+    },
+     {
+      src:    "images/cubesblock.jpg",
+      title:  "Block of cubes",
+      medium: "acrylic on canvas",
+      
+    },
+{
+      src:    "images/gadget.jpg",
+      title:  "gadget",
+      medium: "pen paper",
+      
+    },
+
+  
+    { src: "images/woodcarve cube.jpg",
+     title: "woordcarve cube",                   
+     medium: "wood",
+},
+{
+      src:    "images/monsteragain.jpg",
+      title:  "monster drawing for my children",
+      medium: "color pencil on paper",
+      
+    },
+
+    { src: "images/jellyfish.jpg",   
+     title: "deep sea jelly fish",                   
+     medium: "ink on paper",
+    
+},
+
+      { src: "images/neuron.jpg",   
+     title: "neuron",                   
+     medium: "mixed media on lokta paper",
+    
+},
+
+
+
+   
+    { src: "images/escherlinocut.jpg",
+     title: "Reptile replication",                   
+     medium: "woodcut print on paper",
+},
+{
+      src:    "images/deepseafish.jpg",
+      title:  "deep sea fish",
+      medium: "acrylic on paper",
+      
+    },
+
+    { src: "images/portraitlady.jpg",   
+     title: "portrait of a lady",                   
+     medium: "mixed media on paper",
+    
+},
+    
+{ src: "images/portraitperson.jpg",   
+     title: "self portrait",                   
+     medium: "ink on paper",
+    
+},
+ { src: "images/fungus.jpg",   
+     title: "fungus",                   
+     medium: "acrylic on paper",
+    
+},
+    { src: "images/portraitsmoke.jpg",
+     title: "linear portrait",                   
+     medium: "color pencilon paper",
+},
+{
+      src:    "images/peacock.jpg",
+      title:  "peacock",
+      medium: "ink on paper",
+      
+    },
+
+    { src: "images/rotatedcubes.jpg",   
+     title: "rotated cubes",                   
+     medium: "ink on paper",
+    
+},
+    { src: "images/acrylicfungus.jpg",
+     title: "acrylicfungus",                   
+     medium: "acrylic on canvas",
+},
+{ src: "images/portraitmickjenkins.jpg",
+     title: "Portrait of Mick Jenkins",                   
+     medium: "Mixed media on paper",
+},
+
+    {
+      src:    "images/randomstudies.jpg",
+      title:  "random bits",
+      medium: "ink on paper",
+      
+    },
+    { src: "images/paperfold1.jpg",   
+     title: "origami",                   
+     medium: "paper",
+    
+},
+    { src: "images/paperfold2.jpg",
+     title: "origami tetrahedron",                   
+     medium: "paper",
+},
+
+  
+
+    { src: "images/vangoghincolor.jpg",   
+     title: "Van Gogh in color",                   
+     medium: "watercolor on paper",
+    
+},
+{ src: "images/elephant.jpg",
+     title: "Elephant",                   
+     medium: "pen on paper",
+},
+  
+    
+    // --- copy this block for each new piece ---
+    // {
+    //   src:    "images/your-file-name.jpg",
+    //   title:  "Title of the piece",
+    //   medium: "White ink on black paper",
+    //   year:   "2025"
+    // },
+  ];
+
+  /* ---- Render the grid (no need to touch below this line) ---- */
+   const grid = document.getElementById("grid");
+
+  if (artworks.length === 0) {
+    grid.innerHTML = '<p class="empty-note">Works coming soon.</p>';
+  } else {
+    artworks.forEach((art, i) => {
+      const tile = document.createElement("a");
+      tile.className = "tile";
+      tile.href = "#";
+      tile.style.animationDelay = (0.04 * i) + "s";
+
+      const meta = [art.medium, art.year].filter(Boolean).join(" · ");
+      tile.innerHTML = `
+        <img src="${art.src}" alt="${art.title || ""}" />
+        <div class="cap">
+          <div>${art.title || ""}</div>
+          ${meta ? `<div class="meta">${meta}</div>` : ""}
+        </div>`;
+
+      tile.addEventListener("click", (e) => { e.preventDefault(); openLightbox(art); });
+      grid.appendChild(tile);
+
+      const img = tile.querySelector("img");
+      img.addEventListener("load",  () => { tile._ratio = (img.naturalWidth || 3) / (img.naturalHeight || 4); scheduleLayout(); });
+      img.addEventListener("error", () => { tile._ratio = 1; scheduleLayout(); });
+    });
+  }
+
+  /* ---- justified rows: fill left-to-right, then wrap (whole image, no crop) ---- */
+  const ROW_HEIGHT_DESKTOP = 380;   // bigger = larger images, fewer per row
+  const ROW_HEIGHT_MOBILE  = 210;
+
+  let layoutPending = false;
+  function scheduleLayout() {
+    if (layoutPending) return;
+    layoutPending = true;
+    requestAnimationFrame(() => { layoutPending = false; layoutGrid(); });
+  }
+
+  function layoutGrid() {
+    const tiles = Array.from(grid.querySelectorAll(".tile"));
+    if (!tiles.length) return;
+    const cs = getComputedStyle(grid);
+    const gap = parseFloat(cs.columnGap || cs.gap) || 12;
+    const W = grid.clientWidth;
+    const target = W < 600 ? ROW_HEIGHT_MOBILE : ROW_HEIGHT_DESKTOP;
+
+    let row = [], ratioSum = 0;
+    const flush = (isLast) => {
+      if (!row.length) return;
+      const totalGap = gap * (row.length - 1);
+      let h = (W - totalGap) / ratioSum;
+      if (isLast) h = Math.min(h, target * 1.3);   // keep a lonely last row from ballooning
+      row.forEach((t) => {
+        const r = t._ratio || 0.75;
+        t.style.width  = (r * h) + "px";
+        t.style.height = h + "px";
+      });
+      row = []; ratioSum = 0;
+    };
+    tiles.forEach((t) => {
+      const r = t._ratio || 0.75;
+      row.push(t); ratioSum += r;
+      if (ratioSum * target + gap * (row.length - 1) >= W) flush(false);
+    });
+    flush(true);
+  }
+
+  window.addEventListener("load", layoutGrid);
+  let resizeTimer;
+  window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(layoutGrid, 120); });
+
+  /* ---- Lightbox ---- */
+  const lb     = document.getElementById("lightbox");
+  const lbImg  = document.getElementById("lb-img");
+  const lbCap  = document.getElementById("lb-cap");
+
+  function openLightbox(art) {
+    lbImg.src = art.src;
+    lbImg.alt = art.title || "";
+    const meta = [art.title, art.medium, art.year].filter(Boolean).join("  ·  ");
+    lbCap.textContent = meta;
+    lb.classList.add("open");
+  }
+  function closeLightbox() {
+    lb.classList.remove("open");
+    lbImg.src = "";
+  }
+  lb.addEventListener("click", closeLightbox);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+  });
+  </script>
+</body>
+</html>
