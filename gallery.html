@@ -29,10 +29,11 @@
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
-    <span class="lb-close" aria-hidden="true">&times;</span>
-    <img id="lb-img" src="" alt="" />
-    <div class="lb-cap" id="lb-cap"></div>
-  </div>
+  <span class="lb-close" aria-hidden="true">&times;</span>
+  <button class="lb-nav lb-prev" aria-label="Previous">&lsaquo;</button>
+  <img id="lb-img" src="" alt="" />
+  <button class="lb-nav lb-next" aria-label="Next">&rsaquo;</button>
+  <div class="lb-cap" id="lb-cap"></div>
 
   <script>
   /* ============================================================
@@ -148,11 +149,7 @@
       
     },
 
-    { src: "images/portraitlady.jpg",   
-     title: "portrait of a lady",                   
-     medium: "mixed media on paper",
     
-},
     
 { src: "images/portraitperson.jpg",   
      title: "self portrait",                   
@@ -168,6 +165,11 @@
      title: "linear portrait",                   
      medium: "color pencilon paper",
 },
+ { src: "images/vangoghincolor.jpg",   
+     title: "Van Gogh in color",                   
+     medium: "watercolor on paper",
+    
+},
 {
       src:    "images/peacock.jpg",
       title:  "peacock",
@@ -175,9 +177,9 @@
       
     },
 
-    { src: "images/rotatedcubes.jpg",   
-     title: "rotated cubes",                   
-     medium: "ink on paper",
+    { src: "images/spectrumoflight.jpg",   
+     title: "spectrum of light",                   
+     medium: "color pen on paper",
     
 },
     { src: "images/acrylicfungus.jpg",
@@ -207,16 +209,16 @@
 
   
 
-    { src: "images/vangoghincolor.jpg",   
-     title: "Van Gogh in color",                   
-     medium: "watercolor on paper",
-    
-},
+   
 { src: "images/elephant.jpg",
      title: "Elephant",                   
      medium: "pen on paper",
 },
-  
+  { src: "images/portraitlady.jpg",   
+     title: "portrait of a lady",                   
+     medium: "mixed media on paper",
+    
+},
     
     // --- copy this block for each new piece ---
     // {
@@ -300,26 +302,49 @@
   let resizeTimer;
   window.addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(layoutGrid, 120); });
 
-  /* ---- Lightbox ---- */
-  const lb     = document.getElementById("lightbox");
-  const lbImg  = document.getElementById("lb-img");
-  const lbCap  = document.getElementById("lb-cap");
+ 
+ /* ---- Lightbox with prev / next ---- */
+  const lb    = document.getElementById("lightbox");
+  const lbImg = document.getElementById("lb-img");
+  const lbCap = document.getElementById("lb-cap");
+  let currentIndex = 0;
 
-  function openLightbox(art) {
-    lbImg.src = art.src;
-    lbImg.alt = art.title || "";
-    const meta = [art.title, art.medium, art.year].filter(Boolean).join("  ·  ");
-    lbCap.textContent = meta;
-    lb.classList.add("open");
+  function showArt(i) {
+    if (!artworks.length) return;
+    currentIndex = (i + artworks.length) % artworks.length;   // wraps around
+    const a = artworks[currentIndex];
+    lbImg.src = a.src;
+    lbImg.alt = a.title || "";
+    lbCap.textContent = [a.title, a.medium, a.year].filter(Boolean).join("  ·  ");
   }
-  function closeLightbox() {
-    lb.classList.remove("open");
-    lbImg.src = "";
-  }
-  lb.addEventListener("click", closeLightbox);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeLightbox();
+  function openLightbox(art) { showArt(artworks.indexOf(art)); lb.classList.add("open"); }
+  function closeLightbox()   { lb.classList.remove("open"); lbImg.src = ""; }
+  function showNext() { showArt(currentIndex + 1); }
+  function showPrev() { showArt(currentIndex - 1); }
+
+  // click the dark backdrop or the × to close; image and arrows don't close
+  lb.addEventListener("click", (e) => {
+    if (e.target === lb || e.target.classList.contains("lb-close")) closeLightbox();
   });
+  document.querySelector(".lb-prev").addEventListener("click", (e) => { e.stopPropagation(); showPrev(); });
+  document.querySelector(".lb-next").addEventListener("click", (e) => { e.stopPropagation(); showNext(); });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") closeLightbox();
+    else if (e.key === "ArrowRight") showNext();
+    else if (e.key === "ArrowLeft")  showPrev();
+  });
+
+  // swipe on phones
+  let touchX = null;
+  lb.addEventListener("touchstart", (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 45) { dx < 0 ? showNext() : showPrev(); }
+    touchX = null;
+  }, { passive: true }); 
   </script>
 </body>
 </html>
